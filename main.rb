@@ -5,7 +5,7 @@ require 'rest-client'
 require 'json'
 require 'redis'
 require 'redis-namespace'
-require './search_server'
+require './controllers/search_server'
 
 # Redis Namespace for doctor and patient
 $redis_doctor = Redis::Namespace.new("rxhealth_doctor", :redis => Redis.new)
