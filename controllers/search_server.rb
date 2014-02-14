@@ -29,7 +29,7 @@ class SearchServer
 
       EM.defer do
         @data_doctor = RestClient.post 'http://localhost:9200/doctors/doctor/_search', sent_query.to_json
-        #puts @data_doctor
+        puts @data_doctor
         flag_s = true
         @send_data.notify(flag_u, flag_s)
       end
