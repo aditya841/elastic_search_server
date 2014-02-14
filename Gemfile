@@ -1,20 +1,9 @@
 source 'https://rubygems.org'
 
-#Ruby Framework
-gem 'sinatra'
-
-#Server
-gem 'thin'
-
-#Asynchronous Ruby Framework
 gem 'eventmachine'
-
-#Gem for RestCalls
+gem 'em-http-request', '0.3.0'
+gem 'em-websocket'
 gem 'rest-client'
-
-#JSON
 gem 'json'
-
-#Key Value pair data-store for authentication
 gem 'redis'
 gem 'redis-namespace'
