@@ -7,24 +7,23 @@ require 'redis-namespace'
 require './config/redis'
 require './controllers/token_verify'
 require './controllers/doctor_search'
-
+# p = {
+#   query: {
+#     query_string: {
+#       query: "piyushchauhan2011%40gmail.com"
+#     }
+#   }
+# }
+# p = {
+#   query: {
+#     query_string: {
+#       query: "*gmail*"
+#     }
+#   }
+# }
 EM.run do
   puts "ELASTIC SEARCH SERVER ON EVENT MACHINE"
   puts "Server started on 0.0.0.0:8080"
-  # p = {
-  #   query: {
-  #     query_string: {
-  #       query: "piyushchauhan2011%40gmail.com"
-  #     }
-  #   }
-  # }
-  # p = {
-  #   query: {
-  #     query_string: {
-  #       query: "*gmail*"
-  #     }
-  #   }
-  # }
   EM::WebSocket.start(host: '0.0.0.0',port: 8080) do |websocket|
     websocket.onopen{ puts "Client Connected" }
 
@@ -61,10 +60,9 @@ EM.run do
       token_verify.errback do |status|
         websocket.send("Unauthorized token")
       end
-          
+
     end
     websocket.onclose { puts "closed" }
     websocket.onerror{ |e| puts "err #{e.inspect}"}
   end
 end
-
