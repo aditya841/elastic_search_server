@@ -1,3 +1,4 @@
+# require statement
 require 'eventmachine'
 require 'em-http'
 require 'em-websocket'
@@ -7,13 +8,18 @@ require 'redis-namespace'
 require './config/redis'
 require './controllers/token_verify'
 require './controllers/doctor_search'
-
+=begin
+  Message Structure to be passed
+  msg["token"] = token
+  msg["identifier"] = doctor/patient/appointment
+  msg["domain"] = domain of patient or doctor to be searched
+  msg["query"] = Search query
+=end
 EM.run do
   puts "ELASTIC SEARCH SERVER ON EVENT MACHINE"
   puts "Server started on 0.0.0.0:8080"
   EM::WebSocket.start(host: '0.0.0.0',port: 8080) do |websocket|
     websocket.onopen{ puts "Client Connected" }
-
     websocket.onmessage do |msg|
       msg = JSON.parse(msg)
       token = msg["token"]
