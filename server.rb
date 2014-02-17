@@ -7,9 +7,9 @@ require 'redis'
 require 'redis-namespace'
 require './config/redis'
 require './controllers/token_verify'
-require './controllers/doctor_search'
+require './controllers/search'
 =begin
-  Message Structure to be passed
+  ==================Message Structure to be passed=====================
   msg["token"] = token
   msg["identifier"] = doctor/patient/appointment
   msg["domain"] = domain of patient or doctor to be searched
@@ -21,28 +21,23 @@ EM.run do
   EM::WebSocket.start(host: '0.0.0.0',port: 8080) do |websocket|
     websocket.onopen{ puts "Client Connected" }
     websocket.onmessage do |msg|
+      
       msg = JSON.parse(msg)
       token = msg["token"]
       id = msg["identifier"]
+      query = msg["query"]
+      domain = msg["domain"]
+
       token_verify = TokenVerify.new
       token_verify.verify(token, id)
       token_verify.callback do |status|
-        if (id == "doctor")
-          ds = DoctorSearch.new
-          ds.search(msg["query"])
+        if (id in ["doctor","patient"])
+          ds = Search.new
+          ds.search(query,domain,id)
           ds.callback do |send_data|
             websocket.send(send_data)
           end
           ds.errback do
-            websocket.send("Invalid Query")
-          end
-        elsif (id == "patient")
-          ps = PatientSearch.new
-          ps.search(msg["query"])
-          ps.callback do |send_data|
-            websocket.send(send_data)
-          end
-          ps.errback do
             websocket.send("Invalid Query")
           end
         else
