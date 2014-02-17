@@ -7,20 +7,7 @@ require 'redis-namespace'
 require './config/redis'
 require './controllers/token_verify'
 require './controllers/doctor_search'
-# p = {
-#   query: {
-#     query_string: {
-#       query: "piyushchauhan2011%40gmail.com"
-#     }
-#   }
-# }
-# p = {
-#   query: {
-#     query_string: {
-#       query: "*gmail*"
-#     }
-#   }
-# }
+
 EM.run do
   puts "ELASTIC SEARCH SERVER ON EVENT MACHINE"
   puts "Server started on 0.0.0.0:8080"
