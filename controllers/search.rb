@@ -22,10 +22,9 @@ class Search
     data.callback do
       data_response = JSON.parse(data.response)
       puts data_response
-      send_data = data_response["hits"]["hits"]
+      send_data = data_response["hits"]
       succeed(send_data.to_json)
     end
     data.errback { fail }
   end
-
 end

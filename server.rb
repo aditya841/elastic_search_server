@@ -8,6 +8,7 @@ require 'redis-namespace'
 require './config/redis'
 require './controllers/token_verify'
 require './controllers/search'
+
 =begin
   ==================Message Structure to be passed=====================
   msg["token"] = token
@@ -15,6 +16,7 @@ require './controllers/search'
   msg["domain"] = domain of patient or doctor to be searched
   msg["query"] = Search query
 =end
+
 EM.run do
   puts "ELASTIC SEARCH SERVER ON EVENT MACHINE"
   puts "Server started on 0.0.0.0:8080"
