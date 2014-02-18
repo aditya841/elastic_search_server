@@ -3,9 +3,9 @@ class TokenVerify
   include EM::Deferrable
 
   def verify(token, identifier)
-    if (identifier == "doctor")
+    if (identifier == "doctors")
       check = $redis_doctor.exists(token) 
-    elsif (identifier == "patient")
+    elsif (identifier == "patients")
       check = $redis_patient.exists(token)
     end
     if(check)

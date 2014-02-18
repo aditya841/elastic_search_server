@@ -14,7 +14,8 @@ class Search
     #SEARCH URL
     server_address = 'http://localhost:9200/'
     search_uri = server_address + id.to_s + '/' + search_domain +'_search'
-    
+
+    puts search_uri
     #REST CALL TO ELASTIC SEARCH
     data = EM::HttpRequest.new(search_uri).post(body: query.to_json)
 

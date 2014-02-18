@@ -13,7 +13,7 @@ require './controllers/search'
   ==================Message Structure to be passed=====================
   msg["token"] = token
   msg["identifier"] = doctor/patient/appointment
-  msg["domain"] = domain of patient or doctor to be searched
+  msg["domain"] = domain of patient or doctor to be searched [doctor/patient]
   msg["query"] = Search query
 =end
 
@@ -33,7 +33,7 @@ EM.run do
       token_verify = TokenVerify.new
       token_verify.verify(token, id)
       token_verify.callback do |status|
-        if (id in ["doctor","patient"])
+        if (id == "doctors" || id == "patients")
           ds = Search.new
           ds.search(query,domain,id)
           ds.callback do |send_data|
