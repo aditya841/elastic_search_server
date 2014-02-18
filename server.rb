@@ -12,7 +12,7 @@ require './controllers/search'
 =begin
   ==================Message Structure to be passed=====================
   msg["token"] = token
-  msg["identifier"] = doctor/patient/appointment
+  msg["index"] = doctors/patients/appointment
   msg["domain"] = domain of patient or doctor to be searched [doctor/patient]
   msg["query"] = Search query
 =end
@@ -26,16 +26,16 @@ EM.run do
       
       msg = JSON.parse(msg)
       token = msg["token"]
-      id = msg["identifier"]
+      index = msg["index"]
       query = msg["query"]
       domain = msg["domain"]
 
       token_verify = TokenVerify.new
-      token_verify.verify(token, id)
+      token_verify.verify(token, index)
       token_verify.callback do |status|
-        if (id == "doctors" || id == "patients")
+        if (index == "doctors" || index == "patients")
           ds = Search.new
-          ds.search(query,domain,id)
+          ds.search(query,domain,index)
           ds.callback do |send_data|
             websocket.send(send_data)
           end
@@ -43,7 +43,7 @@ EM.run do
             websocket.send("Invalid Query")
           end
         else
-          ws.send("Invalid identifier")
+          ws.send("Invalid index")
         end
       end
 

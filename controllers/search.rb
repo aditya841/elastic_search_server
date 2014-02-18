@@ -2,7 +2,7 @@ class Search
 
   include EM::Deferrable
 
-  def search(query,domain,id)
+  def search(query,domain,index)
 
     #SEARCH DOMAIN IDENTIFICATION
     if(domain == "all" || domain == "")
@@ -13,7 +13,7 @@ class Search
     
     #SEARCH URL
     server_address = 'http://localhost:9200/'
-    search_uri = server_address + id.to_s + '/' + search_domain +'_search'
+    search_uri = server_address + index.to_s + '/' + search_domain +'_search'
 
     puts search_uri
     #REST CALL TO ELASTIC SEARCH
