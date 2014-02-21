@@ -10,7 +10,7 @@ require './controllers/token_verify'
 require './controllers/search'
 
 =begin
-  ==================Message Structure to be passed=====================
+  -----------------------Message Structure to be passed -----------------------
   msg["token"] = token
   msg["index"] = doctors/patients/appointment
   msg["domain"] = domain of patient or doctor to be searched [doctor/patient]
@@ -22,16 +22,19 @@ EM.run do
   puts "Server started on 0.0.0.0:8080"
   EM::WebSocket.start(host: '0.0.0.0',port: 8080) do |websocket|
     websocket.onopen{ puts "Client Connected" }
+
     websocket.onmessage do |msg|
-      
+
       msg = JSON.parse(msg)
       token = msg["token"]
       index = msg["index"]
-      query = msg["query"]
       domain = msg["domain"]
+      query = msg["query"]
 
       token_verify = TokenVerify.new
+
       token_verify.verify(token, index)
+
       token_verify.callback do |status|
         if (index == "doctors" || index == "patients")
           ds = Search.new
