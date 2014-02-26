@@ -1,4 +1,4 @@
 rxhealth_search_server
 ======================
 
-RXHEALTH Middle Search Server
+RXHEALTH Search Server middle layer
